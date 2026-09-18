@@ -1,0 +1,4 @@
+interface:
+  display_name: "Career Adviser"
+  short_description: "Career compass, vacancy fit, and CV review"
+  default_prompt: "Use $career-adviser to analyse my career direction, a position, or my CV using my workspace files."
