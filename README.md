@@ -6,6 +6,75 @@ It can help you understand where to grow next, check whether a vacancy fits you,
 
 You do not need to be a developer. You do not need to know how “agents” work. If your AI assistant can open a folder and read files, you are ready.
 
+## Install in one minute
+
+These commands install the skill for your user account, so it is available in every project. They do not upload your CV or career data.
+
+You need [Git](https://git-scm.com/downloads) installed.
+
+### Codex — app, CLI, or IDE extension
+
+Codex and VS Code can both discover skills from `~/.agents/skills`:
+
+```bash
+mkdir -p "$HOME/.agents/skills" && git clone https://github.com/krutenyuk/career-adviser.git "$HOME/.agents/skills/career-adviser"
+```
+
+Start or reload Codex, then ask a career question normally or invoke the skill explicitly:
+
+```text
+$career-adviser
+```
+
+### Claude Code
+
+```bash
+mkdir -p "$HOME/.claude/skills" && git clone https://github.com/krutenyuk/career-adviser.git "$HOME/.claude/skills/career-adviser"
+```
+
+Start or restart Claude Code if needed, then type:
+
+```text
+/career-adviser
+```
+
+### VS Code with GitHub Copilot
+
+If you already used the Codex command above, there is nothing else to install: VS Code also reads `~/.agents/skills`.
+
+For a Copilot-only installation, use:
+
+```bash
+mkdir -p "$HOME/.copilot/skills" && git clone https://github.com/krutenyuk/career-adviser.git "$HOME/.copilot/skills/career-adviser"
+```
+
+Open Copilot Chat and type `/career-adviser`, or ask a matching career question and let Copilot load the skill automatically.
+
+<details>
+<summary>Windows PowerShell commands</summary>
+
+#### Codex and VS Code
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.agents\skills" | Out-Null; git clone https://github.com/krutenyuk/career-adviser.git "$HOME\.agents\skills\career-adviser"
+```
+
+#### Claude Code
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null; git clone https://github.com/krutenyuk/career-adviser.git "$HOME\.claude\skills\career-adviser"
+```
+
+#### VS Code with GitHub Copilot only
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.copilot\skills" | Out-Null; git clone https://github.com/krutenyuk/career-adviser.git "$HOME\.copilot\skills\career-adviser"
+```
+
+</details>
+
+After installation, make a private copy of `assets/workspace-template`, add your CV or describe your experience in chat, and begin with a normal career question.
+
 ## The short version
 
 1. Download this project.
@@ -200,19 +269,13 @@ Add `SKILL.md` to the tool's project instructions, rules, knowledge, or custom p
 
 Copy the complete `career-adviser` folder into that tool's skills folder. Keep the folder name unchanged.
 
-For Codex, a personal installation usually looks like:
+Current personal skill locations are:
 
-```text
-~/.codex/skills/career-adviser/
-```
+- **Codex:** `~/.agents/skills/career-adviser/`
+- **Claude Code:** `~/.claude/skills/career-adviser/`
+- **VS Code with GitHub Copilot:** `~/.agents/skills/career-adviser/` or `~/.copilot/skills/career-adviser/`
 
-You can then ask normally or, where explicit skill calls are supported, start with:
-
-```text
-$career-adviser
-```
-
-If a tool does not notice the new skill immediately, restart or reload it.
+You can then ask normally or invoke the skill explicitly with `$career-adviser` in Codex and `/career-adviser` in Claude Code or VS Code. If a tool does not notice the new skill immediately, restart or reload it.
 
 ### If your assistant only works in chat
 
