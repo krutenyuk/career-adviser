@@ -6,74 +6,51 @@ It can help you understand where to grow next, check whether a vacancy fits you,
 
 You do not need to be a developer. You do not need to know how “agents” work. If your AI assistant can open a folder and read files, you are ready.
 
-## Install in one minute
+## Install in one command
 
-These commands install the skill for your user account, so it is available in every project. They do not upload your CV or career data.
-
-You need [Git](https://git-scm.com/downloads) installed.
-
-### Codex — app, CLI, or IDE extension
-
-Codex and VS Code can both discover skills from `~/.agents/skills`:
+If you have [Node.js](https://nodejs.org/) installed, run:
 
 ```bash
-mkdir -p "$HOME/.agents/skills" && git clone https://github.com/krutenyuk/career-adviser.git "$HOME/.agents/skills/career-adviser"
+npx skills add krutenyuk/career-adviser -g
 ```
 
-Start or reload Codex, then ask a career question normally or invoke the skill explicitly:
+The installer finds the skill, detects supported AI agents on your computer, and lets you choose where to install it. The `-g` flag makes Career Adviser available in all your projects.
 
-```text
-$career-adviser
-```
-
-### Claude Code
+To install non-interactively for one specific agent:
 
 ```bash
-mkdir -p "$HOME/.claude/skills" && git clone https://github.com/krutenyuk/career-adviser.git "$HOME/.claude/skills/career-adviser"
+# Codex
+npx skills add krutenyuk/career-adviser --skill career-adviser -g -a codex -y
+
+# Claude Code
+npx skills add krutenyuk/career-adviser --skill career-adviser -g -a claude-code -y
+
+# VS Code with GitHub Copilot
+npx skills add krutenyuk/career-adviser --skill career-adviser -g -a github-copilot -y
 ```
 
-Start or restart Claude Code if needed, then type:
+Then invoke it with `$career-adviser` in Codex or `/career-adviser` in Claude Code and VS Code. You can also ask a matching career question normally and let the agent load the skill automatically.
 
-```text
-/career-adviser
-```
-
-### VS Code with GitHub Copilot
-
-If you already used the Codex command above, there is nothing else to install: VS Code also reads `~/.agents/skills`.
-
-For a Copilot-only installation, use:
+To update it later:
 
 ```bash
-mkdir -p "$HOME/.copilot/skills" && git clone https://github.com/krutenyuk/career-adviser.git "$HOME/.copilot/skills/career-adviser"
+npx skills update career-adviser -g
 ```
-
-Open Copilot Chat and type `/career-adviser`, or ask a matching career question and let Copilot load the skill automatically.
 
 <details>
-<summary>Windows PowerShell commands</summary>
+<summary>Manual installation without Node.js</summary>
 
-#### Codex and VS Code
+Download this repository and copy the complete `career-adviser` folder to the personal skills directory used by your agent:
 
-```powershell
-New-Item -ItemType Directory -Force "$HOME\.agents\skills" | Out-Null; git clone https://github.com/krutenyuk/career-adviser.git "$HOME\.agents\skills\career-adviser"
-```
+- **Codex:** `~/.agents/skills/career-adviser/`
+- **Claude Code:** `~/.claude/skills/career-adviser/`
+- **VS Code with GitHub Copilot:** `~/.agents/skills/career-adviser/` or `~/.copilot/skills/career-adviser/`
 
-#### Claude Code
-
-```powershell
-New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null; git clone https://github.com/krutenyuk/career-adviser.git "$HOME\.claude\skills\career-adviser"
-```
-
-#### VS Code with GitHub Copilot only
-
-```powershell
-New-Item -ItemType Directory -Force "$HOME\.copilot\skills" | Out-Null; git clone https://github.com/krutenyuk/career-adviser.git "$HOME\.copilot\skills\career-adviser"
-```
+Restart or reload the agent if the skill does not appear immediately.
 
 </details>
 
-After installation, make a private copy of `assets/workspace-template`, add your CV or describe your experience in chat, and begin with a normal career question.
+Installing the skill does not upload your CV or career data. After installation, make a private copy of `assets/workspace-template`, add your CV or describe your experience in chat, and begin with a normal career question.
 
 ## The short version
 
