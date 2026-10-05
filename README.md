@@ -1,22 +1,16 @@
 # Career Adviser 🧭
 
-Career Adviser turns an AI assistant into a thoughtful career partner.
+Career Adviser is an installable AI skill for evidence-based career planning, vacancy analysis, CV improvement and interview learning.
 
-It can help you understand where to grow next, check whether a vacancy fits you, improve your CV, and remember the useful things you discover along the way.
+It keeps career context in a private workspace so the assistant can continue from prior work without relying on chat memory.
 
-You do not need to be a developer. You do not need to know how “agents” work. If your AI assistant can open a folder and read files, you are ready.
-
-## Install in one command
-
-If you have [Node.js](https://nodejs.org/) installed, run:
+## Install
 
 ```bash
 npx skills add krutenyuk/career-adviser -g
 ```
 
-The installer finds the skill, detects supported AI agents on your computer, and lets you choose where to install it. The `-g` flag makes Career Adviser available in all your projects.
-
-To install non-interactively for one specific agent:
+For a specific agent:
 
 ```bash
 # Codex
@@ -29,268 +23,109 @@ npx skills add krutenyuk/career-adviser --skill career-adviser -g -a claude-code
 npx skills add krutenyuk/career-adviser --skill career-adviser -g -a github-copilot -y
 ```
 
-Then invoke it with `$career-adviser` in Codex or `/career-adviser` in Claude Code and VS Code. You can also ask a matching career question normally and let the agent load the skill automatically.
-
-To update it later:
+Update later with:
 
 ```bash
 npx skills update career-adviser -g
 ```
 
-<details>
-<summary>Manual installation without Node.js</summary>
+## Architecture
 
-Download this repository and copy the complete `career-adviser` folder to the personal skills directory used by your agent:
+The root `SKILL.md` is deliberately small. It understands the user's goal and combines specialised capabilities when needed:
 
-- **Codex:** `~/.agents/skills/career-adviser/`
-- **Claude Code:** `~/.claude/skills/career-adviser/`
-- **VS Code with GitHub Copilot:** `~/.agents/skills/career-adviser/` or `~/.copilot/skills/career-adviser/`
+- `career-compass` — career direction and growth;
+- `vacancy-fit` — role fit and gap analysis;
+- `cv-review` — CV positioning and tailoring;
+- `interview-review` — learning from interviews and recruiter calls.
 
-Restart or reload the agent if the skill does not appear immediately.
+Shared rules live in `references/`, especially evidence discipline and workspace behaviour.
 
-</details>
+This means a request such as "assess this vacancy and tailor my CV" can use both Vacancy Fit and CV Review instead of being forced into one mode.
 
-Installing the skill does not upload your CV or career data. After installation, make a private copy of `assets/workspace-template`, add your CV or describe your experience in chat, and begin with a normal career question.
+## Private workspace
 
-## The short version
+Copy `assets/workspace-template/` somewhere private.
 
-1. Download this project.
-2. Make your own private copy of the `workspace-template` folder.
-3. Put your CV there and ask your AI assistant a career question.
-
-For example:
-
-> Read the Career Adviser instructions and help me understand what role I should target next.
-
-That is enough to begin.
-
-## What is this, exactly?
-
-Career Adviser is not a separate app. There is no new account, dashboard, or subscription.
-
-It is a set of instructions for an AI assistant, plus a simple folder where you keep your career information. Think of it as two things working together:
-
-- **the adviser** — `SKILL.md` tells the AI how to help you;
-- **the notebook** — your private career folder holds your CV, vacancies, notes, and results.
-
-The AI reads the notebook before answering. This means you do not have to explain your whole career again every time you start a new conversation.
-
-## What can it help with?
-
-You can talk to it normally. You do not need to choose a special mode or remember a command.
-
-### “I do not know what I want next”
-
-Career Adviser runs a **Career Compass** conversation. It asks about work that gives or takes away energy, projects you are proud of, your strengths, constraints, location, languages, and plans.
-
-Then it suggests two to four realistic directions. For each one, it explains why it may fit, what you already have, what is missing, and one useful action you can take now.
-
-Try saying:
-
-> I feel stuck in my current role and do not know where to grow next.
-
-### “I found a job. Do I fit?”
-
-Add the vacancy to the `jobs` folder or paste it into the chat. Career Adviser compares the job with your real experience.
-
-It shows:
-
-- where you are a strong match;
-- where the evidence is weak or missing;
-- which gaps actually matter;
-- how realistic the opportunity looks;
-- what to improve first;
-- what to change in your CV.
-
-Try saying:
-
-> I added a vacancy to the jobs folder. How well do I fit, and what are the biggest gaps?
-
-### “Can you make my CV better?”
-
-Career Adviser reviews your CV for a role, country, or region. It looks at positioning, clarity, seniority, evidence, results, keywords, and language.
-
-It does not invent achievements or silently rewrite your original file.
-
-Try saying:
-
-> Review my CV for senior product strategy roles in Germany. Tell me which changes would have the biggest impact.
-
-### “I had an interview. What should I learn from it?”
-
-Put the transcript or notes into the `transcripts` folder.
-
-Career Adviser finds useful stories, facts, metrics, better wording, and things to improve before the next interview. It shows you what it found and asks what may be added to your profile. Nothing from a transcript goes into `profile.md` without your approval.
-
-Try saying:
-
-> I added a new interview transcript. What did you learn about me, and what should I do better next time?
-
-## Start in five minutes
-
-### Step 1: Download Career Adviser
-
-On GitHub, click the green **Code** button, choose **Download ZIP**, and unzip the downloaded file.
-
-If you already use Git, you can clone it instead:
-
-```bash
-git clone https://github.com/<owner>/career-adviser.git
-```
-
-You should now have a folder called `career-adviser`.
-
-### Step 2: Make your private career folder
-
-Open:
+Typical structure:
 
 ```text
-career-adviser/assets/workspace-template
+my-career/
+├── cv/
+├── jobs/
+├── transcripts/
+├── support/
+├── outcomes/
+├── profile.md
+└── summary.md
 ```
 
-Duplicate the whole `workspace-template` folder and rename the copy. For example:
+### What the files mean
 
-```text
-my-career
-```
+- `profile.md` — durable, confirmed career facts and preferences;
+- `summary.md` — short working memory: active applications, recent conclusions and next actions;
+- `outcomes/` — detailed dated analyses;
+- `jobs/` — saved vacancies and application material;
+- `transcripts/` — recruiter/interview/coaching notes;
+- `support/` — useful market or domain material;
+- `cv/` — source and tailored CV versions.
 
-Move this new folder somewhere private. Your Documents folder is fine.
+The skill should read only the material relevant to the current decision rather than loading the entire workspace every time.
 
-Do not put your real CV or interview notes into the original `workspace-template`. That folder is only a clean blank copy for new users.
+## Evidence discipline
 
-If you prefer the command line, the same action looks like this:
+The adviser separates:
+- confirmed facts;
+- inferences;
+- missing evidence;
+- real gaps;
+- third-party opinions.
 
-```bash
-cp -R career-adviser/assets/workspace-template my-career
-```
+It must not invent metrics, seniority, scope, tools, team size or outcomes. Plausible experience is not treated as confirmed experience.
 
-### Step 3: Add your CV — or just start talking
+## How to use it
 
-Put your current CV into:
+You can ask naturally:
 
-```text
-my-career/cv/
-```
+> I feel stuck. What realistic directions do I have from here?
 
-PDF, Markdown, and plain text are all good choices if your AI assistant can read them.
+> Here is a vacancy. How well do I fit?
 
-No CV yet? That is okay. Tell the adviser about:
+> Assess this role and tailor my CV for it.
 
-- the roles you have had;
-- the kind of work you did;
-- the tools or methods you used;
-- two or three results you are proud of.
+> I added notes from an interview. What should I learn from it?
 
-The adviser can build your profile from the conversation. It should not keep pushing you to upload a file if you prefer to work in chat.
+The assistant decides which capabilities to combine.
 
-### Step 4: Let your AI assistant see both folders
+## New workspace
 
-Your assistant needs access to:
+If the workspace has too little evidence for a substantive conclusion, add a CV to `cv/` or describe the relevant experience in chat. The adviser should ask only for information that could materially change the decision, not run a fixed intake questionnaire.
 
-1. the `career-adviser` folder, which contains its instructions;
-2. your private `my-career` folder, which contains your information.
+## Updating profile and summary
 
-Then say something like:
+Confirmed durable information belongs in `profile.md`.
 
-> Read `career-adviser/SKILL.md` and use it as your instructions. My private career files are in `my-career`. Help me decide what to do next.
+Current applications, recent conclusions, open questions and immediate next actions belong in `summary.md`.
 
-Some AI tools can remember the skill after you install it. Others need to be reminded to read `SKILL.md` when you start a new project or chat. Both ways are fine.
+Detailed analyses belong in `outcomes/`.
 
-## What are all these folders for?
+This keeps long-term memory, working memory and history separate.
 
-Imagine your career folder as a small filing cabinet:
+## Evaluation
 
-- **`cv/`** — your current CV and any versions you want to compare;
-- **`jobs/`** — vacancies you are considering;
-- **`transcripts/`** — notes or transcripts from interviews, recruiter calls, and career consultations;
-- **`support/`** — useful articles, wording examples, industry notes, or leadership descriptions;
-- **`outcomes/`** — longer reports created by the adviser;
-- **`profile.md`** — the reliable facts the adviser knows about you;
-- **`summary.md`** — a short “where we are now” note for the next session.
+`evals/` contains lightweight regression cases for checking future prompt and model changes. They cover strong and weak vacancy fit, mixed vacancy/CV requests, insufficient context, conflicting evidence and interview feedback.
 
-When this guide says `/cv/` or `/jobs/`, it means the folder inside **your private career folder**. It does not mean the top level of your computer.
+## Privacy
 
-You do not need to fill everything in. Start with a CV or a short description of your experience. The other folders become useful over time.
+Do not put a filled private career workspace into this public repository. Keep personal CVs, interview notes, salary information and application history outside the public skill repository.
 
-## Where will the answers go?
+## Manual installation
 
-Short answers appear in the chat. Longer analysis is saved in `outcomes`:
+Copy the complete `career-adviser` folder into the skills directory used by your agent.
 
-```text
-outcomes/YYYY-MM-DD_compass.md
-outcomes/YYYY-MM-DD_vacancy-<company>-<role>.md
-outcomes/YYYY-MM-DD_cv-review.md
-```
+Common locations:
 
-`profile.md` keeps confirmed facts about your experience, goals, preferences, languages, location, and constraints.
+- Codex: `~/.agents/skills/career-adviser/`
+- Claude Code: `~/.claude/skills/career-adviser/`
+- VS Code / GitHub Copilot: `~/.agents/skills/career-adviser/` or `~/.copilot/skills/career-adviser/`
 
-`summary.md` keeps the latest conclusions, active applications, open questions, and next actions. This helps a future conversation start from where you stopped.
-
-## How to connect it to your AI tool
-
-Different AI tools use different words: skills, rules, instructions, context, knowledge, or project files. Do not worry about the label. The important part is that the assistant can read `SKILL.md` and your private career folder.
-
-### The simple way: point the assistant to the file
-
-Open both folders in your AI workspace and say:
-
-> Please read `career-adviser/SKILL.md` before helping me with the files in `my-career`.
-
-This is the easiest option for many AI editors and file-aware assistants.
-
-### If your tool has a place for instructions
-
-Add `SKILL.md` to the tool's project instructions, rules, knowledge, or custom prompt. You can upload the file, link to it, or paste its contents — whichever your tool supports.
-
-### If your tool supports installable skills
-
-Copy the complete `career-adviser` folder into that tool's skills folder. Keep the folder name unchanged.
-
-Current personal skill locations are:
-
-- **Codex:** `~/.agents/skills/career-adviser/`
-- **Claude Code:** `~/.claude/skills/career-adviser/`
-- **VS Code with GitHub Copilot:** `~/.agents/skills/career-adviser/` or `~/.copilot/skills/career-adviser/`
-
-You can then ask normally or invoke the skill explicitly with `$career-adviser` in Codex and `/career-adviser` in Claude Code or VS Code. If a tool does not notice the new skill immediately, restart or reload it.
-
-### If your assistant only works in chat
-
-Upload `SKILL.md`, your CV, and any other relevant files to the chat. Ask the assistant to return updated Markdown files for you to download.
-
-This still works, but the assistant may not remember previous sessions automatically. Keep the latest `profile.md` and `summary.md`, then upload them next time.
-
-## A few useful habits
-
-- Keep using the same private career folder. That is how the adviser builds context over time.
-- Save the full text of a vacancy, not only the link. Job pages can disappear or require a login.
-- Add numbers and concrete examples when you can. “Reduced reporting time by 30%” is more useful than “improved reporting.”
-- Correct the adviser when something is wrong. Your confirmed information matters more than an AI guess.
-- Tell it the target country or region when reviewing a CV. Expectations differ between markets.
-- You can edit `profile.md` yourself at any time. It is your file.
-
-## Please keep your information private
-
-Your career folder may contain your name, contact details, salary expectations, visa status, employment history, and interview conversations.
-
-Do not upload your filled `my-career` folder to a public GitHub repository. Keep it outside the public `career-adviser` project, or make sure it is excluded from Git.
-
-The downloadable `workspace-template` is blank on purpose.
-
-## Updating Career Adviser
-
-Download the newest version and replace the installed `career-adviser` folder. If you edited `SKILL.md`, save your copy first.
-
-Do not replace `my-career`. Your private career folder is separate from the skill and should stay with you.
-
-## Removing it
-
-Delete the installed `career-adviser` folder from your AI tool's skills or instructions location.
-
-This does not delete your private career folder. You can keep that notebook, move it, or remove it separately.
-
-## One last thing
-
-The quality of the result depends on what your AI assistant can do. The best experience comes from an assistant that can read files, write Markdown, open PDFs, and search the web when current market information is needed.
-
-But you do not need a perfect setup to start. A CV, a folder, and one honest question are enough.
+The exact integration may evolve by agent, but the skill itself remains portable because its behaviour and workspace are plain files.
