@@ -1,0 +1,602 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Career Adviser</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap">
+<style>
+
+/* ── Palette ─────────────────────────────────────── */
+:root {
+  --sage: #E7F3EA;
+  --sage-leaf: rgba(255,255,255,0.52);
+  --sage-shade: #d4e8d8;
+  --coral: #EC644E;
+  --blue: #9ABAE3;
+  --magenta: #CF3889;
+  --ink: #1C2428;
+  --ink-mid: #3a5545;
+  --ink-soft: #5a7060;
+  --border: #c8e0cc;
+  --bg: #E7F3EA;
+  --fg: #1C2428;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sage: #1a2e22; --sage-leaf: rgba(26,44,30,0.85); --sage-shade: #152618;
+    --border: #2d4835; --ink: #ddeee3; --ink-mid: #a8c8b0; --ink-soft: #7aa888;
+    --bg: #1a2e22; --fg: #ddeee3; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sage: #1a2e22; --sage-leaf: rgba(26,44,30,0.85); --sage-shade: #152618;
+  --border: #2d4835; --ink: #ddeee3; --ink-mid: #a8c8b0; --ink-soft: #7aa888;
+  --bg: #1a2e22; --fg: #ddeee3; color-scheme: dark;
+}
+
+/* ── Reset ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--fg); font-family: 'Source Serif 4', Georgia, serif; }
+
+/* ── i18n ────────────────────────────────────────── */
+.ru { display: none; }
+body.lang-ru .ru { display: revert; }
+body.lang-ru .en { display: none; }
+
+/* ── Topbar ──────────────────────────────────────── */
+.topbar {
+  padding-block: 15px;
+  padding-left: max(48px, env(safe-area-inset-left, 0px));
+  padding-right: max(48px, env(safe-area-inset-right, 0px));
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar-word {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; font-weight: 600;
+  letter-spacing: -0.01em; color: var(--fg);
+}
+.lang-btn {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft);
+  border: 1px solid var(--border); background: none; cursor: pointer;
+  padding: 5px 10px; transition: color 0.1s, border-color 0.1s;
+}
+.lang-btn:hover { color: var(--coral); border-color: var(--coral); }
+.topbar-install { font-family: monospace; font-size: 11px; color: var(--ink-soft); }
+
+/* ── Hero ────────────────────────────────────────── */
+.hero {
+  padding-block: 96px;
+  padding-left: max(48px, env(safe-area-inset-left, 0px));
+  padding-right: max(48px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; bottom: -32px; right: -16px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(160px, 20vw, 300px); font-weight: 800;
+  color: var(--coral); opacity: 0.07; line-height: 1;
+  pointer-events: none; user-select: none; letter-spacing: -0.04em;
+}
+.hero h1 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(40px, 5.5vw, 76px); font-weight: 800;
+  line-height: 1.04; letter-spacing: -0.025em; color: var(--fg);
+  text-wrap: balance; max-width: 860px; position: relative; z-index: 1;
+}
+.hero h1 strong { color: var(--coral); }
+.hero-sub {
+  font-size: 18px; line-height: 1.75; color: var(--ink-mid); max-width: 560px;
+  margin-top: 28px; position: relative; z-index: 1;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 12px; margin-top: 40px;
+  background: var(--ink); color: #E7F3EA; padding: 14px 24px;
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 600;
+  position: relative; z-index: 1;
+}
+.hero-cta code { font-family: monospace; font-size: 13px; color: var(--coral); }
+
+/* ── Chapters ────────────────────────────────────── */
+.chapter {
+  padding-block: 80px;
+  padding-left: max(48px, env(safe-area-inset-left, 0px));
+  padding-right: max(48px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+}
+.ch-num {
+  position: absolute; top: 24px; right: max(40px, env(safe-area-inset-right, 0px));
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(100px, 14vw, 200px); font-weight: 800;
+  color: var(--blue); opacity: 0.11; line-height: 1;
+  pointer-events: none; user-select: none; letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.chapter h2 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(26px, 3.2vw, 44px); font-weight: 800;
+  line-height: 1.1; letter-spacing: -0.025em; color: var(--fg);
+  text-wrap: balance; max-width: 680px; margin-bottom: 28px; position: relative; z-index: 1;
+}
+.chapter-body { max-width: 700px; position: relative; z-index: 1; }
+.chapter-body > p { font-size: 17px; line-height: 1.8; color: var(--ink-mid); margin-bottom: 24px; }
+.note { font-size: 13px; color: var(--ink-soft); font-style: italic; margin-top: 16px; }
+
+/* ── Diagram ─────────────────────────────────────── */
+.diag-wrap { overflow-x: auto; margin-top: 8px; -webkit-overflow-scrolling: touch; }
+.diag-wrap svg { min-width: 480px; display: block; }
+
+/* ── Evidence strip ──────────────────────────────── */
+.ev-strip { border: 1px solid var(--border); overflow: hidden; margin-bottom: 12px; }
+.ev-row {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--border); background: var(--sage-leaf);
+}
+.ev-row:last-child { border-bottom: none; }
+.ev-pill {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 12px 14px; width: 160px; flex-shrink: 0; border-right: 1px solid var(--border);
+  display: flex; align-items: center;
+}
+.ev-pill.conf { background: var(--blue); color: var(--ink); }
+.ev-pill.inf  { background: var(--magenta); color: #fff; }
+.ev-pill.gap  { background: var(--coral); color: #fff; }
+.ev-text { padding: 13px 20px; font-size: 15px; line-height: 1.6; color: var(--fg); }
+
+/* ── Steps list ──────────────────────────────────── */
+.steps-list { border: 1px solid var(--border); overflow: hidden; }
+.step-item {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--border); background: var(--sage-leaf);
+}
+.step-item:last-child { border-bottom: none; }
+.step-n {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 800;
+  color: var(--coral); opacity: 0.5;
+  min-width: 60px; border-right: 1px solid var(--border); flex-shrink: 0;
+  display: flex; align-items: flex-start; justify-content: center; padding: 22px 16px 0;
+  font-variant-numeric: tabular-nums;
+}
+.step-content { padding: 20px 24px; flex: 1; min-width: 0; }
+.step-title {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; font-weight: 700;
+  color: var(--fg); margin-bottom: 8px; letter-spacing: -0.01em;
+}
+.step-text { font-size: 14px; line-height: 1.72; color: var(--ink-mid); }
+.step-text code {
+  font-family: monospace; font-size: 13px; color: var(--coral);
+  background: rgba(0,0,0,0.05); padding: 2px 6px; word-break: break-all;
+}
+
+/* ── Profile block ───────────────────────────────── */
+.profile-block { border: 1px solid var(--border); overflow: hidden; margin-top: 4px; }
+.profile-intro {
+  padding: 13px 22px; border-bottom: 1px solid var(--border);
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 12px; font-weight: 600;
+  color: var(--ink-soft); letter-spacing: 0.02em;
+}
+.pf-row { display: grid; grid-template-columns: 190px 1fr; border-bottom: 1px solid var(--border); }
+.pf-row:last-child { border-bottom: none; }
+.pf-label {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--coral);
+  padding: 13px 18px; border-right: 1px solid var(--border);
+  background: var(--sage-leaf); display: flex; align-items: flex-start;
+}
+.pf-value {
+  font-family: monospace; font-size: 12px; color: var(--ink-mid);
+  padding: 13px 18px; line-height: 1.65; background: var(--sage-leaf);
+  word-break: break-word;
+}
+
+/* ── Capability list ─────────────────────────────── */
+.cap-list { border: 1px solid var(--border); overflow: hidden; }
+.cap-item {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--border); background: var(--sage-leaf);
+}
+.cap-item:last-child { border-bottom: none; }
+.cap-n {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800;
+  color: var(--coral); opacity: 0.45; padding: 22px 20px;
+  min-width: 68px; border-right: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-variant-numeric: tabular-nums;
+}
+.cap-content { padding: 20px 24px; flex: 1; min-width: 0; }
+.cap-title {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 17px; font-weight: 700;
+  color: var(--fg); margin-bottom: 6px; letter-spacing: -0.01em;
+}
+.cap-text { font-size: 14px; line-height: 1.7; color: var(--ink-mid); }
+
+/* ── Tips ────────────────────────────────────────── */
+.tips-list { display: flex; flex-direction: column; gap: 16px; }
+.tip { background: var(--sage-leaf); border: 1px solid var(--border); padding: 24px 28px; }
+.tip-head {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; font-weight: 700;
+  color: var(--fg); margin-bottom: 12px; letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.tip-tag {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--blue); color: var(--ink); padding: 3px 8px; flex-shrink: 0;
+}
+.tip p { font-size: 15px; line-height: 1.72; color: var(--ink-mid); margin-bottom: 12px; }
+.tip p:last-child { margin-bottom: 0; }
+.tip em { color: var(--ink-mid); font-style: italic; }
+.tip code {
+  font-family: monospace; font-size: 13px; color: var(--coral);
+  background: rgba(0,0,0,0.05); padding: 2px 5px;
+}
+
+/* ── Install callout ─────────────────────────────── */
+.install-block { background: var(--ink); padding: 32px 36px; max-width: 620px; margin-top: 32px; }
+.install-block h3 {
+  font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 800;
+  color: #fff; margin-bottom: 14px; letter-spacing: -0.01em;
+}
+.install-block code {
+  display: block; font-family: monospace; font-size: 14px; color: var(--coral);
+  background: rgba(255,255,255,0.09); padding: 12px 16px; margin-bottom: 14px;
+  word-break: break-all; line-height: 1.5;
+}
+.install-block p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.65; }
+.install-block strong { color: rgba(255,255,255,0.9); }
+
+/* ── CTA wrap ────────────────────────────────────── */
+.cta-wrap {
+  padding-block: 64px;
+  padding-left: max(48px, env(safe-area-inset-left, 0px));
+  padding-right: max(48px, env(safe-area-inset-right, 0px));
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 680px) {
+  .hero-bg, .ch-num, .topbar-install { display: none; }
+  .hero-cta { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .pf-row { grid-template-columns: 1fr; }
+  .pf-label { border-right: none; border-bottom: 1px solid var(--border); }
+  .ev-pill { width: 100px; }
+  .chapter { padding-block: 60px; }
+}
+</style>
+
+<!-- ── Topbar ───────────────────────────────────────── -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-word">Career Adviser</span>
+    <button class="lang-btn" id="lang-btn" aria-label="Switch language">RU</button>
+  </div>
+  <code class="topbar-install">npx skills add krutenyuk/career-adviser -g</code>
+</div>
+
+<!-- ── Hero ─────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-bg">AI</div>
+  <h1>
+    <span class="en">An AI adviser that holds your <strong>whole career history</strong></span>
+    <span class="ru">ИИ-помощник, который хранит <strong>всю историю вашей карьеры</strong></span>
+  </h1>
+  <p class="hero-sub en">Most AI tools forget you between sessions. Career Adviser keeps a private workspace of everything you have actually done, applied for, and said in interviews.</p>
+  <p class="hero-sub ru">Большинство ИИ-инструментов забывают вас после каждой сессии. Career Adviser ведёт приватное рабочее пространство со всем, что вы реально делали, на что откликались и что говорили на собеседованиях.</p>
+  <div class="hero-cta">
+    <span class="en">Install:</span><span class="ru">Установить:</span>
+    <code>npx skills add krutenyuk/career-adviser -g</code>
+  </div>
+</div>
+
+<!-- ── Chapter 01: The principle ────────────────────── -->
+<div class="chapter">
+  <span class="ch-num">01</span>
+  <h2>
+    <span class="en">Evidence from your history, not guesses from your prompt</span>
+    <span class="ru">Факты из вашей истории, а не догадки из запроса</span>
+  </h2>
+  <div class="chapter-body">
+    <p class="en">When you ask a generic AI "what should I do next in my career?", it can only use what you tell it in that one conversation. Career Adviser is different: it reads your private workspace of CV versions, job descriptions, and interview transcripts, and labels every claim by how well it is supported.</p>
+    <p class="ru">Когда вы спрашиваете обычный ИИ «что мне делать дальше в карьере?», он видит только то, что вы написали в этом разговоре. Career Adviser работает иначе: он читает ваше приватное рабочее пространство с версиями резюме, описаниями вакансий и транскриптами собеседований, и сопровождает каждое утверждение указанием на степень его обоснованности.</p>
+    <div class="ev-strip">
+      <div class="ev-row">
+        <span class="ev-pill conf"><span class="en">Confirmed</span><span class="ru">Подтверждено</span></span>
+        <span class="ev-text"><span class="en">8 years leading product teams in fintech — from your CV and three interview transcripts</span><span class="ru">8 лет руководства продуктовыми командами в финтехе — из CV и трёх транскриптов собеседований</span></span>
+      </div>
+      <div class="ev-row">
+        <span class="ev-pill inf"><span class="en">Inferred</span><span class="ru">Вывод</span></span>
+        <span class="ev-text"><span class="en">Strong stakeholder management likely from P&L ownership — reasonable, but not your stated claim</span><span class="ru">Сильные навыки работы со стейкхолдерами — вероятный вывод из владения P&L, но прямо не заявлено</span></span>
+      </div>
+      <div class="ev-row">
+        <span class="ev-pill gap"><span class="en">Gap</span><span class="ru">Пробел</span></span>
+        <span class="ev-text"><span class="en">No demonstrated public-facing technical writing — this role requires it; your profile has none</span><span class="ru">Нет подтверждённых навыков публичного технического письма — роль требует этого; в профиле данных нет</span></span>
+      </div>
+    </div>
+    <p class="note en">It never invents experience or embellishes metrics. Gaps are named, not smoothed over.</p>
+    <p class="note ru">Career Adviser никогда не выдумывает опыт и не приукрашивает метрики. Пробелы называются прямо, а не замалчиваются.</p>
+  </div>
+</div>
+
+<!-- ── Chapter 02: Getting started ──────────────────── -->
+<div class="chapter">
+  <span class="ch-num">02</span>
+  <h2>
+    <span class="en">Getting started</span>
+    <span class="ru">С чего начать</span>
+  </h2>
+  <div class="chapter-body">
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-n">1</span>
+        <div class="step-content">
+          <div class="step-title"><span class="en">Install the skill globally</span><span class="ru">Установите навык глобально</span></div>
+          <div class="step-text">
+            <span class="en">Run once — the skill becomes available in every agent and project from that moment on.</span>
+            <span class="ru">Запустите один раз — навык сразу будет доступен во всех агентах и проектах.</span>
+            <br><br><code>npx skills add krutenyuk/career-adviser -g</code>
+          </div>
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-n">2</span>
+        <div class="step-content">
+          <div class="step-title"><span class="en">Create your workspace folder</span><span class="ru">Создайте папку рабочего пространства</span></div>
+          <div class="step-text">
+            <span class="en">A private folder anywhere on your machine — for example <code>~/my-career</code>. Add <code>profile.md</code> to it (you'll fill it in the next step), and create subfolders <code>cv/</code>, <code>jobs/</code>, <code>transcripts/</code>, <code>outcomes/</code>.</span>
+            <span class="ru">Приватная папка в любом месте на вашем компьютере — например <code>~/my-career</code>. Добавьте в неё <code>profile.md</code> (заполните его на следующем шаге) и создайте подпапки <code>cv/</code>, <code>jobs/</code>, <code>transcripts/</code>, <code>outcomes/</code>.</span>
+          </div>
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-n">3</span>
+        <div class="step-content">
+          <div class="step-title"><span class="en">Open any supported agent and point to your workspace</span><span class="ru">Откройте поддерживаемый агент и укажите путь к рабочему пространству</span></div>
+          <div class="step-text">
+            <span class="en">Works in Claude Code, GitHub Copilot, and Codex. Say: <code>"Run career-compass using my workspace at ~/my-career"</code></span>
+            <span class="ru">Работает в Claude Code, GitHub Copilot и Codex. Напишите: <code>«Запусти career-compass, используя моё рабочее пространство ~/my-career»</code></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Chapter 03: Fill profile.md ──────────────────── -->
+<div class="chapter">
+  <span class="ch-num">03</span>
+  <h2>
+    <span class="en">Fill your profile.md — the more you add, the more precise the advice</span>
+    <span class="ru">Заполните profile.md — чем больше данных, тем точнее советы</span>
+  </h2>
+  <div class="chapter-body">
+    <p class="en">profile.md is the foundation of everything Career Adviser knows about you. It reads this file at the start of every session. Write in plain prose — complete sentences are better than bullet points.</p>
+    <p class="ru">profile.md — это основа всего, что Career Adviser знает о вас. Он читает этот файл в начале каждой сессии. Пишите обычным текстом — полные предложения работают лучше перечислений.</p>
+
+    <div class="profile-block">
+      <div class="profile-intro">
+        <span class="en">Example — real entries work better than templates</span>
+        <span class="ru">Пример — конкретные записи работают лучше шаблонов</span>
+      </div>
+      <div class="pf-row">
+        <span class="pf-label"><span class="en">Who you are</span><span class="ru">О вас</span></span>
+        <span class="pf-value">
+          <span class="en">Anya K. — Senior PM, Berlin. 8 years in fintech and e-commerce. Looking for Head of Product or Group PM at a growth-stage company.</span>
+          <span class="ru">Аня К. — Senior PM, Берлин. 8 лет в финтехе и e-commerce. Ищу роль Head of Product или Group PM в компании стадии роста.</span>
+        </span>
+      </div>
+      <div class="pf-row">
+        <span class="pf-label"><span class="en">Work history</span><span class="ru">История работы</span></span>
+        <span class="pf-value">2020–present &nbsp; Senior PM, FinTech Co. — 3 PMs, €2M budget<br>2017–2020 &nbsp;&nbsp;&nbsp;&nbsp; PM, E-commerce startup — 0→1 launch, 120k users</span>
+      </div>
+      <div class="pf-row">
+        <span class="pf-label"><span class="en">Achievements</span><span class="ru">Достижения</span></span>
+        <span class="pf-value">
+          <span class="en">Reduced checkout time 34% → +12% conversion. Hired first data science team of 4.</span>
+          <span class="ru">Сократила время оформления заказа на 34% → конверсия +12%. Наняла первую команду data science (4 человека).</span>
+        </span>
+      </div>
+      <div class="pf-row">
+        <span class="pf-label"><span class="en">Career goals</span><span class="ru">Карьерные цели</span></span>
+        <span class="pf-value">
+          <span class="en">Head of Product or Group PM at a B2C scale-up in fintech or marketplace. Berlin or remote.</span>
+          <span class="ru">Head of Product или Group PM в B2C scale-up в финтехе или маркетплейсе. Берлин или удалённо.</span>
+        </span>
+      </div>
+      <div class="pf-row">
+        <span class="pf-label"><span class="en">Key skills</span><span class="ru">Ключевые навыки</span></span>
+        <span class="pf-value">Product strategy · Stakeholder management · SQL · OKR facilitation</span>
+      </div>
+      <div class="pf-row">
+        <span class="pf-label"><span class="en">Languages</span><span class="ru">Языки</span></span>
+        <span class="pf-value">Russian (native) · English (C1) · German (B2)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Chapter 04: Four capabilities ────────────────── -->
+<div class="chapter">
+  <span class="ch-num">04</span>
+  <h2>
+    <span class="en">Four capabilities — each drawing on your workspace</span>
+    <span class="ru">Четыре инструмента — каждый использует ваше рабочее пространство</span>
+  </h2>
+  <div class="chapter-body">
+    <div class="cap-list">
+      <div class="cap-item">
+        <span class="cap-n">01</span>
+        <div class="cap-content">
+          <div class="cap-title"><span class="en">Career Compass</span><span class="ru">Карьерный компас</span></div>
+          <div class="cap-text"><span class="en">Stuck or considering a change? Get realistic direction options grounded in your actual experience — a real map of where you can credibly go, not a wishlist.</span><span class="ru">Чувствуете себя застрявшим или думаете о смене? Получите реалистичные варианты направлений на основе вашего реального опыта — не список желаний, а карта реальных возможностей.</span></div>
+        </div>
+      </div>
+      <div class="cap-item">
+        <span class="cap-n">02</span>
+        <div class="cap-content">
+          <div class="cap-title"><span class="en">Vacancy Fit</span><span class="ru">Соответствие вакансии</span></div>
+          <div class="cap-text"><span class="en">Paste a job description. Find out exactly how well you fit — named gaps, transferable strengths, honest read of the competition.</span><span class="ru">Вставьте описание вакансии. Узнайте, насколько точно вы подходите — конкретные пробелы, сильные стороны, честная оценка конкурентов.</span></div>
+        </div>
+      </div>
+      <div class="cap-item">
+        <span class="cap-n">03</span>
+        <div class="cap-content">
+          <div class="cap-title"><span class="en">CV Review</span><span class="ru">Анализ резюме</span></div>
+          <div class="cap-text"><span class="en">Tailored rewrites and positioning advice for each target role. Tracks your CV versions and what changed between them.</span><span class="ru">Адаптированные правки и советы по позиционированию для каждой целевой роли. Отслеживает версии вашего резюме и изменения между ними.</span></div>
+        </div>
+      </div>
+      <div class="cap-item">
+        <span class="cap-n">04</span>
+        <div class="cap-content">
+          <div class="cap-title"><span class="en">Interview Review</span><span class="ru">Анализ собеседования</span></div>
+          <div class="cap-text"><span class="en">Add your interview transcripts. Extract what landed, what didn't, and the patterns that emerge across all your conversations.</span><span class="ru">Добавляйте транскрипты собеседований. Извлекайте уроки из каждого разговора и видите паттерны, которые повторяются.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Chapter 05: Expand your workspace ────────────── -->
+<div class="chapter">
+  <span class="ch-num">05</span>
+  <h2>
+    <span class="en">Expand your workspace</span>
+    <span class="ru">Расширьте рабочее пространство</span>
+  </h2>
+  <div class="chapter-body">
+    <p class="en">Career Adviser reads any file you put in your workspace folder. The richer the context, the more precise the analysis.</p>
+    <p class="ru">Career Adviser читает любые файлы в вашей папке рабочего пространства. Чем богаче контекст — тем точнее анализ.</p>
+
+    <div class="tips-list">
+
+      <div class="tip">
+        <div class="tip-head">
+          <span class="tip-tag"><span class="en">Wording files</span><span class="ru">Файлы с формулировками</span></span>
+          <span class="en">Add seniority-level definitions for your field</span>
+          <span class="ru">Добавьте описания уровней вашей специальности</span>
+        </div>
+        <p class="en">Find or write a file that describes what is expected at each level — Junior PM, Senior PM, Principal PM (or whatever levels apply in your field): scope, responsibilities, typical achievements. Save it to your workspace as <code>seniority-levels.md</code>.</p>
+        <p class="en">Then tell Career Adviser: <em>"Use seniority-levels.md in my workspace to calibrate where I stand against each level."</em> It will cross-reference your profile and CV against the definitions and tell you exactly what is confirmed, what is inferred, and what is missing for each step up.</p>
+        <p class="ru">Найдите или напишите файл с описанием ожиданий на каждом уровне — Junior PM, Senior PM, Principal PM (или другие уровни вашей специальности): зона ответственности, задачи, типичные достижения. Сохраните его в рабочее пространство как <code>seniority-levels.md</code>.</p>
+        <p class="ru">Затем скажите Career Adviser: <em>«Используй seniority-levels.md в моём рабочем пространстве, чтобы оценить, где я нахожусь относительно каждого уровня.»</em> Он сопоставит ваш профиль и резюме с описаниями и скажет точно: что подтверждено, что выведено и чего не хватает для следующего уровня.</p>
+      </div>
+
+      <div class="tip">
+        <div class="tip-head">
+          <span class="tip-tag"><span class="en">Voice recorder</span><span class="ru">Голосовая запись</span></span>
+          <span class="en">Record interviews with Wispr Flow and save the transcript</span>
+          <span class="ru">Запишите собеседование через Wispr Flow и сохраните транскрипт</span>
+        </div>
+        <p class="en">Turn on Wispr Flow's Notetaker (or any meeting recorder — Otter.ai, Fireflies, Fathom) before an interview. After the call, save the transcript file to <code>transcripts/</code> in your workspace — for example <code>transcripts/acme-2024-10.md</code>.</p>
+        <p class="en">Career Adviser reads it in your next session, extracts what landed and what didn't, and builds the interview into its picture of your patterns over time.</p>
+        <p class="ru">Включите Notetaker в Wispr Flow (или любой другой инструмент записи встреч — Otter.ai, Fireflies, Fathom) перед собеседованием. После звонка сохраните файл транскрипта в папку <code>transcripts/</code> вашего рабочего пространства — например <code>transcripts/acme-2024-10.md</code>.</p>
+        <p class="ru">Career Adviser прочитает его на следующей сессии, извлечёт что сработало и что нет, и добавит это собеседование в общую картину ваших паттернов.</p>
+      </div>
+
+      <div class="tip">
+        <div class="tip-head">
+          <span class="tip-tag"><span class="en">Job library</span><span class="ru">Библиотека вакансий</span></span>
+          <span class="en">Save every job description you seriously consider</span>
+          <span class="ru">Сохраняйте каждую вакансию, которую серьёзно рассматриваете</span>
+        </div>
+        <p class="en">Even if you don't apply — save the description to <code>jobs/</code>. Over time Career Adviser builds a picture of what draws you: which industries, scope, team sizes, and requirements appear repeatedly in the roles you pay attention to.</p>
+        <p class="ru">Даже если вы не откликаетесь — сохраните описание в папку <code>jobs/</code>. Со временем Career Adviser составит картину того, что вас привлекает: какие индустрии, масштаб, размер команды и требования повторяются в ролях, которые вас цепляют.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Chapter 06: What else ────────────────────────── -->
+<div class="chapter">
+  <span class="ch-num">06</span>
+  <h2>
+    <span class="en">Your workspace works with any AI tool</span>
+    <span class="ru">Рабочее пространство работает с любым ИИ-инструментом</span>
+  </h2>
+  <div class="chapter-body">
+    <p class="en">The workspace is a plain folder of Markdown files on your own machine. Any AI agent or code assistant that can read files can plug straight in — no API, no account, no configuration beyond pointing at the folder path.</p>
+    <p class="ru">Рабочее пространство — это обычная папка с Markdown-файлами на вашем компьютере. Любой ИИ-агент или ассистент, умеющий читать файлы, может подключиться напрямую — без API, без аккаунта, без настройки кроме пути к папке.</p>
+
+    <div class="diag-wrap">
+      <svg viewBox="0 0 700 253" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <text x="220" y="14" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="9" font-weight="700" letter-spacing="1" fill="var(--blue)">AGENTS</text>
+        <text x="540" y="14" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="9" font-weight="700" letter-spacing="1" fill="var(--magenta)">CODE TOOLS</text>
+
+        <rect x="35" y="22" width="110" height="44" rx="7" fill="var(--blue)" fill-opacity="0.12" stroke="var(--blue)" stroke-opacity="0.55"/>
+        <text x="90" y="47" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="13" font-weight="700" fill="var(--fg)">Hermes</text>
+
+        <rect x="165" y="22" width="110" height="44" rx="7" fill="var(--blue)" fill-opacity="0.12" stroke="var(--blue)" stroke-opacity="0.55"/>
+        <text x="220" y="47" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="13" font-weight="700" fill="var(--fg)">Grokbot</text>
+
+        <rect x="295" y="22" width="110" height="44" rx="7" fill="var(--blue)" fill-opacity="0.12" stroke="var(--blue)" stroke-opacity="0.55"/>
+        <text x="350" y="47" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="13" font-weight="700" fill="var(--fg)">Muse</text>
+
+        <rect x="425" y="22" width="110" height="44" rx="7" fill="var(--magenta)" fill-opacity="0.09" stroke="var(--magenta)" stroke-opacity="0.45"/>
+        <text x="480" y="47" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="12" font-weight="700" fill="var(--fg)">Claude Code</text>
+
+        <rect x="545" y="22" width="110" height="44" rx="7" fill="var(--magenta)" fill-opacity="0.09" stroke="var(--magenta)" stroke-opacity="0.45"/>
+        <text x="600" y="47" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="13" font-weight="700" fill="var(--fg)">Codex</text>
+
+        <line x1="90" y1="66" x2="90" y2="100" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="220" y1="66" x2="220" y2="100" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="350" y1="66" x2="350" y2="100" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="480" y1="66" x2="480" y2="100" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="600" y1="66" x2="600" y2="100" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="90" y1="100" x2="600" y2="100" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="350" y1="100" x2="350" y2="126" stroke="var(--border)" stroke-width="1.5"/>
+        <polygon points="350,131 344,123 356,123" fill="var(--ink-soft)" opacity="0.45"/>
+
+        <rect x="60" y="132" width="580" height="116" rx="9" fill="var(--sage)" fill-opacity="0.45" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="350" y="155" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="14" font-weight="800" fill="var(--fg)">Career Workspace</text>
+        <rect x="80" y="162" width="540" height="35" rx="5" fill="var(--blue)" fill-opacity="0.09"/>
+        <text x="350" y="177" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="11" fill="var(--fg)">profile.md · summary.md · cv/</text>
+        <text x="350" y="191" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="9" fill="var(--ink-soft)">Read by any connected tool</text>
+        <rect x="80" y="203" width="540" height="37" rx="5" fill="var(--ink-soft)" fill-opacity="0.08"/>
+        <text x="350" y="219" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="11" fill="var(--fg)">jobs/ · transcripts/ · outcomes/</text>
+        <text x="350" y="232" text-anchor="middle" font-family="'Bricolage Grotesque', sans-serif" font-size="9" fill="var(--ink-soft)">Accumulated evidence — written by you or any tool</text>
+      </svg>
+    </div>
+
+    <div class="steps-list" style="margin-top:24px;">
+      <div class="step-item">
+        <div class="step-content">
+          <div class="step-title"><span class="en">Any tool that reads files can join</span><span class="ru">Любой инструмент, умеющий читать файлы, можно подключить</span></div>
+          <div class="step-text"><span class="en">Drop any agent's working directory at your workspace folder — Notion AI, Obsidian, a custom script. It immediately picks up everything Career Adviser has been building. No API, no sync step, no integration work.</span><span class="ru">Укажите любому агенту путь к вашей папке — Notion AI, Obsidian, любой скрипт. Он сразу получает всё, что Career Adviser накапливал. Без API, без синхронизации, без настройки интеграции.</span></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-content">
+          <div class="step-title"><span class="en">Focus a sub-workspace per target company</span><span class="ru">Создайте подпапку под конкретную компанию</span></div>
+          <div class="step-text"><span class="en">Targeting one company seriously? Create <code>jobs/acme/</code> with their descriptions, your research notes, and interview prep. Point any tool at just that subfolder for tight, company-specific context — without mixing it into your general workspace.</span><span class="ru">Целитесь в конкретную компанию? Создайте <code>jobs/acme/</code> с вакансиями, исследованием и подготовкой к собеседованию. Направьте любой инструмент именно на эту подпапку — сфокусированный контекст без смешивания с общим рабочим пространством.</span></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-content">
+          <div class="step-title"><span class="en">Chain agents across sessions</span><span class="ru">Стройте цепочки агентов между сессиями</span></div>
+          <div class="step-text"><span class="en">Ask Grokbot to research a company and save its findings to <code>jobs/acme-research.md</code>. Next session Career Adviser reads that file automatically — one agent's output feeds another agent's context, with no copy-paste and no context window gymnastics.</span><span class="ru">Попросите Grokbot исследовать компанию и сохранить результаты в <code>jobs/acme-research.md</code>. На следующей сессии Career Adviser прочитает этот файл автоматически — результат одного агента становится контекстом следующего, без копипасты и без жонглирования контекстным окном.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-wrap">
+  <div class="install-block">
+    <h3><span class="en">Install once, use everywhere</span><span class="ru">Установить один раз, использовать везде</span></h3>
+    <code>npx skills add krutenyuk/career-adviser -g</code>
+    <p class="en">Works inside <strong>Claude Code</strong>, <strong>Codex</strong>, and any agent that can read files. Install globally once — available in every tool and project on your machine.</p>
+    <p class="ru">Работает в <strong>Claude Code</strong>, <strong>Codex</strong> и любом агенте, умеющем читать файлы. Установите один раз глобально — навык будет доступен в любом инструменте.</p>
+  </div>
+</div>
+
+<script>
+const btn = document.getElementById('lang-btn');
+function setLang(l) {
+  document.body.classList.toggle('lang-ru', l === 'ru');
+  btn.textContent = l === 'ru' ? 'EN' : 'RU';
+  try { localStorage.setItem('ca-lang', l); } catch(e) {}
+}
+try { if (localStorage.getItem('ca-lang') === 'ru') setLang('ru'); } catch(e) {}
+btn.addEventListener('click', () => setLang(document.body.classList.contains('lang-ru') ? 'en' : 'ru'));
+</script>
+
+</body></html>
